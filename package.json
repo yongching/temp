@@ -1,0 +1,77 @@
+{
+  "name": "@lava-x/next-js",
+  "version": "1.0.0",
+  "description": "NextJs Helper from Lava X",
+  "main": "dist/index.js",
+  "source": "src/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "concurrently \"tsc -w -p tsconfig.json\"",
+    "clean": "rimraf dist",
+    "eslint": "eslint . --ext .ts,.tsx",
+    "eslint-fix": "eslint --fix . --ext .ts,.tsx",
+    "prettier": "prettier --write .",
+    "cz": "git-cz",
+    "prepublish": "npm run build"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "peerDependencies": {
+    "react": ">= 16.13.1 < 17",
+    "react-dom": ">= 16.13.1 < 17"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.2.5",
+    "express": "^4.17.1",
+    "graphql": "^15.4.0",
+    "isomorphic-unfetch": "^3.1.0",
+    "lodash": "^4.17.20",
+    "next": "^9.5.2",
+    "nookies": "^2.4.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "subscriptions-transport-ws": "^0.9.18"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/prompt": "^11.0.0",
+    "@types/lodash": "^4.14.160",
+    "@types/node": "^14.11.2",
+    "@types/react": "^16.9.48",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "commitizen": "^4.2.2",
+    "concurrently": "^5.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.0",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  }
+}
