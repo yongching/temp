@@ -67,7 +67,7 @@ export const withAuthSync = (config: AuthConfig): any => <P,>(
     }, [apolloClient]);
 
     // sign out auth user
-    const signOut = (callback: (isRestrict: boolean) => void) => {
+    const signOut = (callback?: (isRestrict: boolean) => void) => {
       apolloClient.cache.reset().then(() => {
         clearAuthToken();
         window.localStorage.setItem(
