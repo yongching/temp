@@ -1,5 +1,5 @@
 import { AppContext, AppProps } from "next/app";
-import { NextPageContext } from "next";
+import { NextComponentType, NextPageContext } from "next";
 
 export * from "./apollo";
 export * from "./with-auth";
@@ -14,6 +14,7 @@ export interface MyAppContext extends AppContext {
 }
 
 export interface MyAppProps extends AppProps {
+  Component: NextComponentType & any;
   pageProps: {
     authUser?: any;
     config?: {
