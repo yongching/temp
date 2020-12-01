@@ -1,6 +1,6 @@
 {
   "name": "@lava-x/next-js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "NextJs Helper from Lava X",
   "main": "dist/index.js",
   "source": "src/index.js",
