@@ -11,6 +11,7 @@ export type NextContextPayload = AppContext | NextPageContext | any;
 export interface MyAppContext extends AppContext {
   apolloClient?: any;
   authUser?: any;
+  [key: string]: any;
 }
 
 export interface MyAppProps extends AppProps {
@@ -29,4 +30,5 @@ export interface MyAppProps extends AppProps {
 export interface MyPageContext extends NextPageContext {
   apolloClient?: any;
   authUser?: any;
+  [key: string]: any;
 }
