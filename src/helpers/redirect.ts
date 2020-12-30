@@ -6,6 +6,7 @@ export const redirect = (
   target: string,
   method:
     | "replace"
+    | "reload"
     | "force-reload"
     | "external"
     | "push"
@@ -32,7 +33,7 @@ export const redirect = (
     return;
   }
 
-  if (method === "force-reload") {
+  if (method === "reload" || method === "force-reload") {
     Router.reload();
     return;
   }
