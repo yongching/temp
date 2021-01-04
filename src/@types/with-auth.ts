@@ -1,6 +1,3 @@
-import { AppContext } from "next/app";
-import { NextPageContext } from "next";
-
 /**
  * @param {string} [notFoundPath]
  * @param {string} [signInPath]
@@ -25,20 +22,6 @@ export type AuthPaths = {
 };
 
 /**
- * ================ HOC
- * @param {Promise<any>} [checkAuthProfile]
- * @param {Function(context)} [getAuthToken]
- * @param {string} [syncAuthEventKeyName]
- * @param {int} [tokenValidityInDays]
- * @param {boolean} [logging]
- * @param {boolean} [enableAdmin]
- * @param {boolean} [enableOnboarding]
- * @param {string} [valueKeyOnboard]
- * @param {string} [valueKeyAdmin]
- * @param {AuthPaths} [paths]
- */
-
-/**
  * Example Options
   {
     checkAuthProfile: (apolloClient) => {},
@@ -61,6 +44,7 @@ export type AuthPaths = {
   };
  */
 export type AuthOptions = {
+  paths: AuthPaths;
   logging?: boolean;
   enableAdmin?: boolean;
   enableOnboarding?: boolean;
@@ -69,10 +53,8 @@ export type AuthOptions = {
   valueKeyOnboard?: string;
   tokenValidityInDays?: number;
   syncAuthEventKeyName?: string;
-  paths: AuthPaths;
-  checkAuthProfile(client: any): Promise<any>;
-  getAuthToken?: (context: AppContext | NextPageContext) => string | null;
-  checkRequiredOnboard(data: any): boolean;
+  checkAuthProfile: (client: any) => Promise<any>;
+  checkRequiredOnboard?: (data: any) => Promise<boolean>;
 };
 
 export type AuthConfig = {

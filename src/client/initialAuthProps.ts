@@ -25,11 +25,11 @@ const checkIsPathMatchesAny = (
   return results.length > 0;
 };
 
-export const initialAuthProps = (
+export const initialAuthProps = async (
   context: NextPageContext,
   authUser: any,
   options: AuthOptions
-): { [key: string]: any } => {
+): Promise<{ [key: string]: any }> => {
   const { asPath, pathname } = context;
   const navigatingToPaths: string[] = [asPath, pathname];
   const { paths } = options;
@@ -48,7 +48,7 @@ export const initialAuthProps = (
   if (pathname === "/_error") {
     if (enableLogging) {
       // eslint-disable-next-line
-      console.log("page not found:", asPath);
+      console.log("===== error path:", asPath, pathname);
     }
 
     if (options.enableNotFoundRedirection && !authUser) {
@@ -82,7 +82,7 @@ export const initialAuthProps = (
       const hasOnboardFunc = !!options.checkRequiredOnboard;
       const onboardValueKey = options.valueKeyOnboard || "setupIsRequired";
       const isAuthUserRequiredOnboard = hasOnboardFunc
-        ? options.checkRequiredOnboard(authUser)
+        ? await options.checkRequiredOnboard(authUser)
         : get(authUser, onboardValueKey, false);
       const onboardPath = paths.onboardingPath || "/get-started"; // ONBOARDING_PATH
 
@@ -103,7 +103,7 @@ export const initialAuthProps = (
     if (isRestrictPathForAuth) {
       if (enableLogging) {
         // eslint-disable-next-line
-        // console.log("===== isAtRestrictPath ");
+        console.log("===== isAtRestrictPath ");
       }
       const afterAuthPath = paths.afterAuthPath || "/";
       redirect(context, afterAuthPath);
@@ -114,7 +114,7 @@ export const initialAuthProps = (
   // always redirect user to signin whenever user access path that is required signin or restricted
   if (enableLogging) {
     // eslint-disable-next-line
-    // console.log("********* check paths: ", navigatingToPaths);
+    console.log("===== check paths: ", navigatingToPaths);
   }
 
   // Check current path whether is accessible for non login user
@@ -132,7 +132,7 @@ export const initialAuthProps = (
   if (isRestrictBeforeAuth) {
     if (enableLogging) {
       // eslint-disable-next-line
-      // console.log("===== isRestrictBeforeAuth ");
+      console.log("===== isRestrictBeforeAuth ");
     }
     const defaultPath = paths.beforeAuthPath || paths.signInPath || "/signin";
     if (!checkIsPathMatchesAny(navigatingToPaths, defaultPath)) {
@@ -144,7 +144,7 @@ export const initialAuthProps = (
   // allow user to access path if passed all condition above
   if (enableLogging) {
     // eslint-disable-next-line
-    // console.log("===== nothingForAuth ");
+    console.log("===== nothingForAuth ");
   }
   return props;
 };

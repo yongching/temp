@@ -35,7 +35,7 @@ export const withAuthSync = (config: AuthConfig): any => <P,>(
   PageComponent: NextComponentType<NextPageContext, any, P>
 ) => {
   const { ssr = true, options } = config;
-  const { checkAuthProfile, getAuthToken } = options;
+  const { checkAuthProfile } = options;
 
   // check whether `checkAuthProfile` provided
   if (!checkAuthProfile) {
@@ -104,17 +104,15 @@ export const withAuthSync = (config: AuthConfig): any => <P,>(
   const retrieveAuthToken = (ctx: any) => {
     const inAppContext = Boolean(ctx.ctx);
     if (inAppContext) {
-      return getAuthToken
-        ? getAuthToken(ctx.ctx)
-        : getTokenFromCookies(ctx.ctx);
+      return getTokenFromCookies(ctx.ctx);
     }
-    return getAuthToken ? getAuthToken(ctx) : getTokenFromCookies(ctx);
+    return getTokenFromCookies(ctx);
   };
 
   if (ssr || PageComponent.getInitialProps) {
     WithAuth.getInitialProps = async (ctx) => {
       const inAppContext = Boolean(ctx.ctx);
-      const hasAuthToken = !!retrieveAuthToken(ctx);
+      const hasAuthToken = !!(await retrieveAuthToken(ctx));
 
       const { authUser } = hasAuthToken
         ? await checkAuthProfile(ctx.apolloClient)
@@ -128,7 +126,7 @@ export const withAuthSync = (config: AuthConfig): any => <P,>(
         pageProps = await App.getInitialProps({ ...ctx, authUser });
       }
 
-      const authConfig = initialAuthProps(ctx.ctx, authUser, options);
+      const authConfig = await initialAuthProps(ctx.ctx, authUser, options);
       const outProps = {
         pageProps: {
           ...pageProps,
