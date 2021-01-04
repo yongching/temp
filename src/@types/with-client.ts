@@ -31,7 +31,7 @@ export type SocketEvents = {
  * @param  {SocketEvents} [websocketEvents] optional
  */
 export type ClientOptions = {
-  getAuthToken(context: AppContext): string | null;
+  getAuthToken?: (context: AppContext) => Promise<string | null>;
   graphqlRequest: {
     uri: string;
     credentials: string;

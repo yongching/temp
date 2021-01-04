@@ -59,15 +59,15 @@ export function createApolloClient(
   } = options;
 
   // method to retrieve auth token
-  const retrieveAuthToken = (ctx: any): string | null => {
+  const retrieveAuthToken = async (ctx: any): Promise<string | null> => {
     return getAuthToken ? getAuthToken(ctx) : getCookie("token", ctx);
   };
 
   const ssrMode = typeof window === "undefined";
 
   // ===== create auth link
-  const authLink = setContext((_, { headers }) => {
-    const token = retrieveAuthToken(context);
+  const authLink = setContext(async (_, { headers }) => {
+    const token = await retrieveAuthToken(context);
     const authprops = token ? { authorization: `Bearer ${token}` } : {};
     // attach authorization token to headers
     return {
@@ -104,11 +104,11 @@ export function createApolloClient(
 
   if (!ssrMode && !isNil(websocketRequest) && !isEmpty(websocketRequest)) {
     // refer to subscription setup https://www.apollographql.com/docs/react/data/subscriptions/
-    const authToken = retrieveAuthToken(context);
     // create websocket subscription client
     const wsClient = new SubscriptionClient(websocketRequest.uri, {
       ...websocketRequest.options,
-      connectionParams() {
+      connectionParams: async () => {
+        const authToken = await retrieveAuthToken(context);
         return {
           headers: {
             authorization: authToken ? `Bearer ${authToken}` : ""
