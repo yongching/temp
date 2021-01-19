@@ -1,7 +1,7 @@
 {
   "name": "@lava-x/next-js",
   "license": "LGPL",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "NextJs Helper from Lava X",
   "main": "dist/index.js",
   "source": "src/index.js",
