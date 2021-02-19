@@ -1,0 +1,10 @@
+import * as Client from "@apollo/client";
+import * as Cache from "@apollo/client/cache";
+import * as React from "@apollo/client/react";
+import * as Utilities from "@apollo/client/utilities";
+import * as CacheTypes from "@apollo/client/cache/inmemory/types";
+export declare const Apollo: typeof Client;
+export declare const ApolloReact: typeof React;
+export declare const ApolloCache: typeof Cache;
+export declare const ApolloCacheTypes: typeof CacheTypes;
+export declare const ApolloUtilities: typeof Utilities;
