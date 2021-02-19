@@ -8,6 +8,7 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { setContext } from "@apollo/client/link/context";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { SubscriptionClient } from "subscriptions-transport-ws";
+import { createUploadLink } from "apollo-upload-client";
 import { ClientOptions, SocketEvents } from "../@types/with-client";
 import { getCookie } from "../helpers/cookies";
 import { NextContextPayload } from "../@types";
@@ -100,7 +101,10 @@ export function createApolloClient(
     if (networkError) console.log(`[Network error]: ${networkError}`);
   });
 
-  let link = ApolloLink.from([onErrorLink, authLink, httpLink]);
+  // ===== upload link
+  const uploadLink = createUploadLink(options.graphqlRequest);
+
+  let link = ApolloLink.from([onErrorLink, authLink, httpLink, uploadLink]);
 
   if (!ssrMode && !isNil(websocketRequest) && !isEmpty(websocketRequest)) {
     // refer to subscription setup https://www.apollographql.com/docs/react/data/subscriptions/
