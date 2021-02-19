@@ -104,7 +104,7 @@ export function createApolloClient(
   // ===== upload link
   const uploadLink = createUploadLink(options.graphqlRequest);
 
-  let link = ApolloLink.from([onErrorLink, authLink, httpLink, uploadLink]);
+  let link = ApolloLink.from([onErrorLink, authLink, uploadLink, httpLink]);
 
   if (!ssrMode && !isNil(websocketRequest) && !isEmpty(websocketRequest)) {
     // refer to subscription setup https://www.apollographql.com/docs/react/data/subscriptions/

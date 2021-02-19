@@ -68,7 +68,7 @@ function createApolloClient(initialState = {}, options, context) {
             console.log(`[Network error]: ${networkError}`);
     });
     const uploadLink = apollo_upload_client_1.createUploadLink(options.graphqlRequest);
-    let link = client_1.ApolloLink.from([onErrorLink, authLink, httpLink, uploadLink]);
+    let link = client_1.ApolloLink.from([onErrorLink, authLink, uploadLink, httpLink]);
     if (!ssrMode && !isNil_1.default(websocketRequest) && !isEmpty_1.default(websocketRequest)) {
         const wsClient = new subscriptions_transport_ws_1.SubscriptionClient(websocketRequest.uri, Object.assign(Object.assign({}, websocketRequest.options), { connectionParams: () => __awaiter(this, void 0, void 0, function* () {
                 const authToken = yield retrieveAuthToken(context);
